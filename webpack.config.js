@@ -1,26 +1,27 @@
-const path = require('path');
-const webpack = require('webpack');
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import  HtmlWebpackPlugin from 'html-webpack-plugin';
 
-const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-module.exports = {
-  mode: 'production',
-
-  plugins: [
-    new webpack.ProgressPlugin(),
-    new WorkboxWebpackPlugin.GenerateSW({
-      swDest: 'sw.js',
-      clientsClaim: true,
-      skipWaiting: false,
-    }),
-  ],
-
+export default {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  mode: process.env.NODE_ENV || 'development',
   module: {
-    rules: [],
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
   },
-
-  devServer: {
-    open: true,
-    host: 'localhost',
-  },
+  plugins: [
+    new HtmlWebpackPlugin(),
+  ],
 };
