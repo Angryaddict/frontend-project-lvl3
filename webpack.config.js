@@ -22,6 +22,9 @@ export default {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'RSS',
+      template: 'src/index.html',
+    }),
   ],
 };
